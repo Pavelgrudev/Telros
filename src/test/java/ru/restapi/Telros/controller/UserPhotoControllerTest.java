@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class UserPhotoControllerTest {
 
+
     @Mock
     private UserPhotoService userPhotoService;
 

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.restapi.Telros.model.User;
 
 /**
- *  Расширяет интерфейс JpaRepository, предоставляя методы CRUD
+ * Расширяет интерфейс JpaRepository, предоставляя методы CRUD
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

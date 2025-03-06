@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class UserInfoControllerTest {
 
+
     private MockMvc mockMvc;
 
     @Mock

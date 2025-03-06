@@ -9,7 +9,7 @@ import ru.restapi.Telros.service.UserPhotoService;
 import java.util.Optional;
 
 /**
- * Реализация сервиса для управления фотографиями пользователей.
+ *  Реализация сервиса для управления фотографиями пользователей.
  * Позволяет выполнять CRUD-операции с объектами UserPhoto.
  */
 

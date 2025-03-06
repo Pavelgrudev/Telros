@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import ru.restapi.Telros.model.UserPhoto;
 import ru.restapi.Telros.repository.UserPhotoRepository;
 
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

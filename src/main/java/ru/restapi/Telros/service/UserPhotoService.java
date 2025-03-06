@@ -5,7 +5,7 @@ import ru.restapi.Telros.model.UserPhoto;
 import java.util.Optional;
 
 /**
- * Интерфейс для управления фотографиями пользователей.
+ *  Интерфейс для управления фотографиями пользователей.
  */
 public interface UserPhotoService {
 

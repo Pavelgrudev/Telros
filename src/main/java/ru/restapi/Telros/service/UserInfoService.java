@@ -10,7 +10,7 @@ public interface UserInfoService {
 
 
     /**
-     * Список всех записей UserInfo
+     *  Список всех записей UserInfo
      */
     List<UserInfo> getAllUserInfo();
 

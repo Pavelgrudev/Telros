@@ -9,7 +9,7 @@ import ru.restapi.Telros.service.UserInfoService;
 import java.util.List;
 import java.util.Optional;
 /**
- * Реализация сервиса для управления детальной информацией о пользователях.
+ *  Реализация сервиса для управления детальной информацией о пользователях.
  * Предоставляет CRUD-операции с объектами UserInfo.
  */
 @Service

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Интерфейс для управления пользователями, содержащий методы CRUD.
+ *  Интерфейс для управления пользователями, содержащий методы CRUD.
  */
 public interface UserService {
 

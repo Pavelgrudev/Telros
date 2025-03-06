@@ -13,7 +13,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * Конфигурационный класс для настройки безопасности приложения.
+ *  Конфигурационный класс для настройки безопасности приложения.
  * Этот класс определяет правила инициализации, аутентификации и авторизации,
  * ну и настраивает пользователей и кодировщик паролей
  */
