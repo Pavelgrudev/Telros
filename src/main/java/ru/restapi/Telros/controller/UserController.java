@@ -21,7 +21,7 @@ public class UserController {
     private UserServiceImpl userService;
 
     /**
-     * Получить список всех пользователей
+     *  Получить список всех пользователей
      */
 
     @GetMapping

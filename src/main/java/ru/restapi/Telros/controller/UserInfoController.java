@@ -9,7 +9,7 @@ import java.util.Optional;
 
 /**
  * Контроллер для управления детальной информацией
- * Предоставляет REST API для выполнения CRUD-операций с объектами UserInfo.
+ * Предоставляет REST API для выполнения CRUD-операций с объектами UserInfo
  */
 @RestController
 @RequestMapping("/userInfo")
