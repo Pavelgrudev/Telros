@@ -29,22 +29,28 @@ class UserPhotoControllerTest {
 
     private MockMvc mockMvc;
 
+    /**
+     * Настройка мок-объектов перед выполнением тестов.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(userPhotoController).build();
     }
 
+    /**
+     * Тест проверяет, что метод createUserPhoto() корректно создает фотографию пользователя.
+     */
     @Test
     void createUserPhoto_ShouldReturnCreatedUserPhoto() throws Exception {
-
+        // Arrange
         UserPhoto userPhoto = new UserPhoto();
         userPhoto.setId(1L);
         userPhoto.setPhotoUrl("https://example.com/photo.jpg");
 
         when(userPhotoService.createUserPhoto(any(UserPhoto.class))).thenReturn(userPhoto);
 
-
+        // Act & Assert
         mockMvc.perform(post("/userPhotos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": 1, \"photoUrl\": \"https://example.com/photo.jpg\"}"))
@@ -55,6 +61,9 @@ class UserPhotoControllerTest {
         verify(userPhotoService, times(1)).createUserPhoto(any(UserPhoto.class));
     }
 
+    /**
+     * Тест проверяет, что метод getUserPhotoById() корректно получает фотографию пользователя по ID.
+     */
     @Test
     void getUserPhotoById_ShouldReturnUserPhoto() throws Exception {
         // Arrange
@@ -64,7 +73,7 @@ class UserPhotoControllerTest {
 
         when(userPhotoService.getUserPhotoById(1L)).thenReturn(Optional.of(userPhoto));
 
-
+        // Act & Assert
         mockMvc.perform(get("/userPhotos/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
@@ -73,16 +82,19 @@ class UserPhotoControllerTest {
         verify(userPhotoService, times(1)).getUserPhotoById(1L);
     }
 
+    /**
+     * Тест проверяет, что метод updateUserPhoto() корректно обновляет фотографию пользователя.
+     */
     @Test
     void updateUserPhoto_ShouldReturnUpdatedUserPhoto() throws Exception {
-
+        // Arrange
         UserPhoto userPhoto = new UserPhoto();
         userPhoto.setId(1L);
         userPhoto.setPhotoUrl("https://example.com/updated-photo.jpg");
 
         when(userPhotoService.updateUserPhoto(anyLong(), any(UserPhoto.class))).thenReturn(userPhoto);
 
-
+        // Act & Assert
         mockMvc.perform(put("/userPhotos/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": 1, \"photoUrl\": \"https://example.com/updated-photo.jpg\"}"))
@@ -93,6 +105,9 @@ class UserPhotoControllerTest {
         verify(userPhotoService, times(1)).updateUserPhoto(anyLong(), any(UserPhoto.class));
     }
 
+    /**
+     * Тест проверяет, что метод deleteUserPhoto() корректно удаляет фотографию пользователя.
+     */
     @Test
     void deleteUserPhoto_ShouldReturnOk() throws Exception {
         // Arrange

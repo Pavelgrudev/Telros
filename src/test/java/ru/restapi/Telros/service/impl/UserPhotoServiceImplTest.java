@@ -94,7 +94,7 @@ class UserPhotoServiceImplTest {
     }
 
     /**
-     * Проверяет, что фотография пользователя успешно обновляется.
+     *  Проверяет, что фотография пользователя успешно обновляется.
      */
     @Test
     void testUpdateUserPhoto_ShouldUpdatePhoto() {

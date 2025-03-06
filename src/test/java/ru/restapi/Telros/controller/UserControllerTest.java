@@ -47,7 +47,7 @@ class UserControllerTest {
     }
 
     /**
-     * Проверяет, что Метод возвращает список всех пользователей
+     * Проверяет, что Метод возвращает список всех пользователей.
      */
     @Test
     void testGetAllUsers_ShouldReturnListOfUsers() throws Exception {

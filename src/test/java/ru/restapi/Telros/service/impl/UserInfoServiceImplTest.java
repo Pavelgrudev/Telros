@@ -32,7 +32,7 @@ class UserInfoServiceImplTest {
     }
 
     /**
-     * Тест проверяет, что метод getAllUserInfo() возвращает список объектов UserInfo.
+     *Тест проверяет, что метод getAllUserInfo() возвращает список объектов UserInfo.
      */
     @Test
     void getAllUserInfo_ShouldReturnListOfUserInfo() {

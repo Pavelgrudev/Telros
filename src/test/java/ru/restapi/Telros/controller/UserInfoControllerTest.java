@@ -97,7 +97,7 @@ class UserInfoControllerTest {
     }
 
     /**
-     * Проверяет, что метод удаляет детальную информацию о пользователе.
+     * Проверяет, что метод удаляет детальную информацию о пользователе
      */
     @Test
     void testDeleteUserInfo_ShouldDeleteUserInfo() throws Exception {

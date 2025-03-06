@@ -8,7 +8,7 @@ import ru.restapi.Telros.service.UserPhotoService;
 import java.util.Optional;
 
 /**
- *  Контроллер для управления фотографиями пользователей.
+ * Контроллер для управления фотографиями пользователей.
  */
 
 @RestController

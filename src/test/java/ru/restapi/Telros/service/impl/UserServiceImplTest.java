@@ -26,7 +26,7 @@ class UserServiceImplTest {
 
         /**
          * Создаем нового пользователя
-         *  */
+         */
 
         User user = new User();
         user.setLastName("Иванов");
