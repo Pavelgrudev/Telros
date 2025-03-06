@@ -8,7 +8,7 @@ import ru.restapi.Telros.service.UserInfoService;
 import java.util.Optional;
 
 /**
- * Контроллер для управления детальной информацией
+ *  Контроллер для управления детальной информацией
  * Предоставляет REST API для выполнения CRUD-операций с объектами UserInfo
  */
 @RestController

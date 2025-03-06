@@ -37,14 +37,14 @@ class UserPhotoControllerTest {
 
     @Test
     void createUserPhoto_ShouldReturnCreatedUserPhoto() throws Exception {
-        // Arrange
+
         UserPhoto userPhoto = new UserPhoto();
         userPhoto.setId(1L);
         userPhoto.setPhotoUrl("https://example.com/photo.jpg");
 
         when(userPhotoService.createUserPhoto(any(UserPhoto.class))).thenReturn(userPhoto);
 
-        // Act & Assert
+
         mockMvc.perform(post("/userPhotos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": 1, \"photoUrl\": \"https://example.com/photo.jpg\"}"))
@@ -64,7 +64,7 @@ class UserPhotoControllerTest {
 
         when(userPhotoService.getUserPhotoById(1L)).thenReturn(Optional.of(userPhoto));
 
-        // Act & Assert
+
         mockMvc.perform(get("/userPhotos/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
@@ -75,14 +75,14 @@ class UserPhotoControllerTest {
 
     @Test
     void updateUserPhoto_ShouldReturnUpdatedUserPhoto() throws Exception {
-        // Arrange
+
         UserPhoto userPhoto = new UserPhoto();
         userPhoto.setId(1L);
         userPhoto.setPhotoUrl("https://example.com/updated-photo.jpg");
 
         when(userPhotoService.updateUserPhoto(anyLong(), any(UserPhoto.class))).thenReturn(userPhoto);
 
-        // Act & Assert
+
         mockMvc.perform(put("/userPhotos/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": 1, \"photoUrl\": \"https://example.com/updated-photo.jpg\"}"))

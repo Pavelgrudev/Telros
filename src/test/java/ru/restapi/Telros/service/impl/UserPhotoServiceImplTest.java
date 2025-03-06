@@ -27,7 +27,7 @@ class UserPhotoServiceImplTest {
     }
 
     /**
-     * Проверяет, что фотография пользователя успешно сохраняется в репозитории
+     * Проверяет, что фотография пользователя  успешно сохраняется в репозитории
      */
     @Test
     void testCreateUserPhoto_ShouldSavePhoto() {

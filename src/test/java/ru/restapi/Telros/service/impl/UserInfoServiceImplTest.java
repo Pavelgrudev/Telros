@@ -23,11 +23,17 @@ class UserInfoServiceImplTest {
     @InjectMocks
     private UserInfoServiceImpl userInfoService;
 
+    /**
+     * Инициализация мок-объектов перед каждым тестом
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Тест проверяет, что метод getAllUserInfo() возвращает список объектов UserInfo.
+     */
     @Test
     void getAllUserInfo_ShouldReturnListOfUserInfo() {
         // Arrange
@@ -57,6 +63,9 @@ class UserInfoServiceImplTest {
         verify(userInfoRepository, times(1)).findAll();
     }
 
+    /**
+     * Тест проверяет, что метод getUserInfoById() возвращает правильный объект UserInfo.
+     */
     @Test
     void getUserInfoById_ShouldReturnUserInfo() {
         // Arrange
@@ -78,6 +87,9 @@ class UserInfoServiceImplTest {
         verify(userInfoRepository, times(1)).findById(1L);
     }
 
+    /**
+     * Тест проверяет, что метод createUserInfo() корректно создает объект UserInfo.
+     */
     @Test
     void createUserInfo_ShouldReturnCreatedUserInfo() {
         // Arrange
@@ -99,6 +111,9 @@ class UserInfoServiceImplTest {
         verify(userInfoRepository, times(1)).save(userInfo);
     }
 
+    /**
+     * Тест проверяет, что метод updateUserInfo() корректно обновляет объект UserInfo.
+     */
     @Test
     void updateUserInfo_ShouldReturnUpdatedUserInfo() {
         // Arrange
@@ -126,6 +141,9 @@ class UserInfoServiceImplTest {
         verify(userInfoRepository, times(1)).save(existingUserInfo);
     }
 
+    /**
+     * Тест проверяет, что метод deleteUserInfo() корректно удаляет объект UserInfo по id
+     */
     @Test
     void deleteUserInfo_ShouldDeleteUserInfo() {
         // Arrange

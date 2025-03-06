@@ -19,22 +19,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class UserInfoControllerTest {
 
-    private MockMvc mockMvc; // Объект для тестирования контроллеров
+    private MockMvc mockMvc;
 
     @Mock
-    private UserInfoService userInfoService; // Мок сервиса
+    private UserInfoService userInfoService;
 
     @InjectMocks
-    private UserInfoController userInfoController; // Тестируемый контроллер
+    private UserInfoController userInfoController;
 
-    private UserInfo userInfo; // Общий тестовый объект UserInfo
+    private UserInfo userInfo;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this); // Инициализация моков
-        mockMvc = MockMvcBuilders.standaloneSetup(userInfoController).build(); // Настройка MockMvc
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(userInfoController).build();
 
-        // Инициализация тестового объекта UserInfo
+
         userInfo = new UserInfo();
         userInfo.setId(1L);
         userInfo.setAddress("Москва");
@@ -46,10 +46,8 @@ class UserInfoControllerTest {
      */
     @Test
     void testCreateUserInfo_ShouldCreateUserInfo() throws Exception {
-        // Мокируем поведение сервиса
         when(userInfoService.createUserInfo(any(UserInfo.class))).thenReturn(userInfo);
 
-        // Выполняем POST-запрос и проверяем результат
         mockMvc.perform(post("/userInfo")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": 1, \"address\": \"Москва\", \"bio\": \"Программист\"}"))
@@ -63,21 +61,20 @@ class UserInfoControllerTest {
     }
 
     /**
-     * Проверяет, что метод возвращает детальную информацию о пользователе по ID.
+     * Проверяет, что метод возвращает детальную информацию о пользователе по id
      */
     @Test
     void testGetUserInfoById_ShouldReturnUserInfo() throws Exception {
-        // Мокируем поведение сервиса
+
         when(userInfoService.getUserInfoById(1L)).thenReturn(Optional.of(userInfo));
 
-        // Выполняем GET-запрос и проверяем результат
-        mockMvc.perform(get("/userInfo/1"))
-                .andExpect(status().isOk()) // Ожидаем статус 200
-                .andExpect(jsonPath("$.id").value(1)) // Проверяем ID
-                .andExpect(jsonPath("$.address").value("Москва")) // Проверяем адрес
-                .andExpect(jsonPath("$.bio").value("Программист")); // Проверяем биографию
 
-        // Проверяем, что метод сервиса был вызван 1 раз
+        mockMvc.perform(get("/userInfo/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.address").value("Москва"))
+                .andExpect(jsonPath("$.bio").value("Программист"));
+
         verify(userInfoService, times(1)).getUserInfoById(1L);
     }
 
@@ -86,19 +83,16 @@ class UserInfoControllerTest {
      */
     @Test
     void testUpdateUserInfo_ShouldUpdateUserInfo() throws Exception {
-        // Мокируем поведение сервиса
         when(userInfoService.updateUserInfo(eq(1L), any(UserInfo.class))).thenReturn(userInfo);
 
-        // Выполняем PUT-запрос и проверяем результат
         mockMvc.perform(put("/userInfo/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": 1, \"address\": \"Москва\", \"bio\": \"Программист\"}"))
-                .andExpect(status().isOk()) // Ожидаем статус 200
-                .andExpect(jsonPath("$.id").value(1)) // Проверяем ID
-                .andExpect(jsonPath("$.address").value("Москва")) // Проверяем адрес
-                .andExpect(jsonPath("$.bio").value("Программист")); // Проверяем биографию
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.address").value("Москва"))
+                .andExpect(jsonPath("$.bio").value("Программист"));
 
-        // Проверяем, что метод сервиса был вызван 1 раз
         verify(userInfoService, times(1)).updateUserInfo(eq(1L), any(UserInfo.class));
     }
 
@@ -107,11 +101,9 @@ class UserInfoControllerTest {
      */
     @Test
     void testDeleteUserInfo_ShouldDeleteUserInfo() throws Exception {
-        // Выполняем DELETE-запрос и проверяем результат
         mockMvc.perform(delete("/userInfo/1"))
-                .andExpect(status().isOk()); // Ожидаем статус 200
+                .andExpect(status().isOk());
 
-        // Проверяем, что метод сервиса был вызван 1 раз
         verify(userInfoService, times(1)).deleteUserInfo(1L);
     }
 }

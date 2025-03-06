@@ -25,7 +25,7 @@ class UserServiceImplTest {
     public void testCreateUser_ShouldSaveUserToDatabase() {
 
         /**
-         *  Создаем нового пользователя
+         * Создаем нового пользователя
          *  */
 
         User user = new User();
@@ -36,16 +36,16 @@ class UserServiceImplTest {
         user.setEmail("ivanov@example.com");
         user.setPhoneNumber("+79991234567");
 
-       /**
-       * Сохраняем пользователя в базу данных
-       */
+        /**
+         * Сохраняем пользователя в базу данных
+         */
 
         User savedUser = userService.createUser(user);
 
 
         /**
          * Проверяем, что пользователь успешно сохранен и имеет ID
-        */
+         */
 
         assertNotNull(savedUser.getId());
         assertEquals("Иванов", savedUser.getLastName());
@@ -55,8 +55,8 @@ class UserServiceImplTest {
     public void testGetUserById_ShouldReturnUserFromDatabase() {
 
         /**
-        * Создаем нового пользователя
-        */
+         * Создаем нового пользователя
+         */
 
         User user = new User();
         user.setLastName("Иванов");
@@ -64,20 +64,20 @@ class UserServiceImplTest {
         user.setEmail("ivanov@example.com");
 
         /**
-        * Сохраняем пользователя в базу данных
-        */
+         * Сохраняем пользователя в базу данных
+         */
 
         userService.createUser(user);
 
         /**
-        * Получаем пользователя по id
-        */
+         * Получаем пользователя по id
+         */
 
         Optional<User> foundUser = userService.getUserById(user.getId());
 
         /**
-        * Проверяем, что пользователь найден и его данные корректны
-        */
+         * Проверяем, что пользователь найден и его данные корректны
+         */
 
         assertTrue(foundUser.isPresent());
         assertEquals("Иванов", foundUser.get().getLastName());
@@ -97,7 +97,7 @@ class UserServiceImplTest {
 
         /**
          * Обновляем данные пользователя
-        */
+         */
 
         user.setLastName("Петров");
         User updatedUser = userService.updateUser(user.getId(), user);
@@ -112,9 +112,9 @@ class UserServiceImplTest {
     @Test
     public void testDeleteUser_ShouldRemoveUserFromDatabase() {
 
-       /**
-        * Создаем нового пользователя
-        */
+        /**
+         * Создаем нового пользователя
+         */
 
         User user = new User();
         user.setLastName("Иванов");
