@@ -41,6 +41,7 @@ public class UserPhotoController {
         return userPhotoService.getUserPhotoById(id);
     }
 
+
     /**
      * Обновление фотографии пользователя.
      * Ожидает multipart-запрос с файлом.
