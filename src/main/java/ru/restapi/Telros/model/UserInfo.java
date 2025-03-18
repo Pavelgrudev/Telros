@@ -1,28 +1,29 @@
 package ru.restapi.Telros.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 /**
- *  Класс-сущность, представляющий детальную информацию о пользователе.
+ * Класс-сущность, представляющий детальную информацию о пользователе.
  */
 @Entity
 @Data
+@Table(name = "user_info")
 public class UserInfo {
 
     /**
      * Уникальный идентификатор UserInfo.
      * Генерируется автоматически.
      */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     /**
      * Адрес пользователя.
      */
     private String address;
-
     /**
      * Биография пользователя.
      */
@@ -30,8 +31,10 @@ public class UserInfo {
 
     /**
      * Связь "один к одному" с пользователем.
+     *
      * @JoinColumn(name = "user_id") - внешний ключ, связывающий UserInfo с User.
      */
+    @JsonManagedReference
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -55,7 +58,6 @@ public class UserInfo {
     /**
      * Геттеры и сеттеры
      */
-
 
     public Long getId() {
         return id;

@@ -12,9 +12,8 @@ import java.util.Optional;
  * Предоставляет REST API для выполнения CRUD-операций с объектами UserInfo
  */
 @RestController
-@RequestMapping("/userInfo")
+@RequestMapping("/user_info")
 public class UserInfoController {
-
 
     @Autowired
     private UserInfoService userInfoService;

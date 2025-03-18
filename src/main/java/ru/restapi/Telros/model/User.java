@@ -1,5 +1,6 @@
 package ru.restapi.Telros.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -53,11 +54,12 @@ public class User {
     private String phoneNumber;
 
     /**
-     * Связь "один к одному" с детальной информацией о пользователе.
+     * Связь "один к одному" с информацией о пользователе.
      * mappedBy = "user" означает, что связь управляется со стороны `UserInfo`.
      * CascadeType.ALL — каскадное выполнение операций (например, удаление).
      * orphanRemoval = true — удаление `UserInfo`, если оно отсоединяется от `User`.
      */
+    @JsonBackReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserInfo userInfo;
 

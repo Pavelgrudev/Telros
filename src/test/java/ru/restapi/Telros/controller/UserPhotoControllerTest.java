@@ -6,8 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.multipart.MultipartFile;
 import ru.restapi.Telros.model.UserPhoto;
 import ru.restapi.Telros.service.UserPhotoService;
 
@@ -21,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class UserPhotoControllerTest {
 
-
     @Mock
     private UserPhotoService userPhotoService;
 
@@ -30,9 +31,6 @@ class UserPhotoControllerTest {
 
     private MockMvc mockMvc;
 
-    /**
-     * Настройка мок-объектов перед выполнением тестов.
-     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -44,41 +42,42 @@ class UserPhotoControllerTest {
      */
     @Test
     void createUserPhoto_ShouldReturnCreatedUserPhoto() throws Exception {
-        // Arrange
+        // Подготовка данных для теста
+        byte[] photoData = "test image data".getBytes();
+        MockMultipartFile file = new MockMultipartFile("file", "photo.jpg", MediaType.IMAGE_JPEG_VALUE, photoData);
+
         UserPhoto userPhoto = new UserPhoto();
         userPhoto.setId(1L);
-        userPhoto.setPhotoUrl("https://example.com/photo.jpg");
+        userPhoto.setPhotoData(photoData);
 
+        // Мокаем вызов сервиса, который должен вернуть созданное фото
         when(userPhotoService.createUserPhoto(any(UserPhoto.class))).thenReturn(userPhoto);
 
-        // Act & Assert
-        mockMvc.perform(post("/userPhotos")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"id\": 1, \"photoUrl\": \"https://example.com/photo.jpg\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.photoUrl").value("https://example.com/photo.jpg"));
+        // Выполнение теста с помощью MockMvc
+        mockMvc.perform(multipart("/userPhotos")
+                        .file(file) // Передаем файл в виде multipart
+                        .contentType(MediaType.MULTIPART_FORM_DATA)) // Указываем тип контента multipart
+                .andExpect(status().isCreated())  // Ожидаем статус 201 CREATED
+                .andExpect(jsonPath("$.id").value(1));  // Проверяем ID созданного фото
 
+        // Проверяем, что метод сервиса был вызван один раз с объектом UserPhoto
         verify(userPhotoService, times(1)).createUserPhoto(any(UserPhoto.class));
     }
-
     /**
      * Тест проверяет, что метод getUserPhotoById() корректно получает фотографию пользователя по ID.
      */
     @Test
     void getUserPhotoById_ShouldReturnUserPhoto() throws Exception {
-        // Arrange
+        byte[] photoData = "test image data".getBytes();
+
         UserPhoto userPhoto = new UserPhoto();
         userPhoto.setId(1L);
-        userPhoto.setPhotoUrl("https://example.com/photo.jpg");
+        userPhoto.setPhotoData(photoData);
 
         when(userPhotoService.getUserPhotoById(1L)).thenReturn(Optional.of(userPhoto));
 
-        // Act & Assert
         mockMvc.perform(get("/userPhotos/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.photoUrl").value("https://example.com/photo.jpg"));
+                .andExpect(status().isOk());
 
         verify(userPhotoService, times(1)).getUserPhotoById(1L);
     }
@@ -88,22 +87,28 @@ class UserPhotoControllerTest {
      */
     @Test
     void updateUserPhoto_ShouldReturnUpdatedUserPhoto() throws Exception {
-        // Arrange
-        UserPhoto userPhoto = new UserPhoto();
-        userPhoto.setId(1L);
-        userPhoto.setPhotoUrl("https://example.com/updated-photo.jpg");
+        byte[] updatedPhotoData = "updated image data".getBytes();
+        MockMultipartFile file = new MockMultipartFile("file", "updated_photo.jpg", MediaType.IMAGE_JPEG_VALUE, updatedPhotoData);
 
-        when(userPhotoService.updateUserPhoto(anyLong(), any(UserPhoto.class))).thenReturn(userPhoto);
+        UserPhoto updatedUserPhoto = new UserPhoto();
+        updatedUserPhoto.setId(1L);
+        updatedUserPhoto.setPhotoData(updatedPhotoData);
 
-        // Act & Assert
-        mockMvc.perform(put("/userPhotos/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"id\": 1, \"photoUrl\": \"https://example.com/updated-photo.jpg\"}"))
+        // Мокаем вызов updateUserPhoto
+        when(userPhotoService.updateUserPhoto(eq(1L), any(MultipartFile.class))).thenReturn(updatedUserPhoto);
+
+        // Выполняем запрос с загрузкой файла
+        mockMvc.perform(multipart("/userPhotos/1")
+                        .file(file)
+                        .with(request -> {
+                            request.setMethod("PUT");
+                            return request;
+                        }))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.photoUrl").value("https://example.com/updated-photo.jpg"));
+                .andExpect(jsonPath("$.id").value(1L));
 
-        verify(userPhotoService, times(1)).updateUserPhoto(anyLong(), any(UserPhoto.class));
+        // Проверяем, что сервис был вызван один раз
+        verify(userPhotoService, times(1)).updateUserPhoto(eq(1L), any(MultipartFile.class));
     }
 
     /**
@@ -111,13 +116,13 @@ class UserPhotoControllerTest {
      */
     @Test
     void deleteUserPhoto_ShouldReturnOk() throws Exception {
-        // Arrange
         doNothing().when(userPhotoService).deleteUserPhoto(1L);
 
-        // Act & Assert
+        // Выполнение запроса на удаление фото
         mockMvc.perform(delete("/userPhotos/1"))
-                .andExpect(status().isOk()); // Ожидаем статус 200 OK
+                .andExpect(status().isNoContent());  // Ожидаем статус 204 No Content
 
+        // Проверяем, что метод deleteUserPhoto был вызван один раз
         verify(userPhotoService, times(1)).deleteUserPhoto(1L);
     }
 }

@@ -3,14 +3,13 @@ package ru.restapi.Telros.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.restapi.Telros.model.User;
-import ru.restapi.Telros.service.UserService;
 import ru.restapi.Telros.service.impl.UserServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- *  Контроллер для управления пользователями.
+ * Контроллер для управления пользователями.
  * Предоставляет REST API для выполнения CRUD-операций с пользователями.
  */
 @RestController
@@ -21,7 +20,7 @@ public class UserController {
     private UserServiceImpl userService;
 
     /**
-     *  Получить список всех пользователей
+     * Получить список всех пользователей
      */
 
     @GetMapping
